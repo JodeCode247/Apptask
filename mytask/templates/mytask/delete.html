@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirm Deletion</h1>
+        <p>Are you sure you want to delete this user?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-delete" >Delete</button>
+            <a href="{% url 'view_all_user' %}">Cancel</a>
+        </form>
+    </div>
+</body>
+
+<style>
+.btn-delete {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.btn-delete:hover {
+    background-color: #ff1a1a;
+}
+</style>
+</html>

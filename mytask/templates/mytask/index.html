@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    
+</head>
+<body>
+    <div class="header">
+         <nav><a href=""><h3>LOGO</h3></a></nav>
+        <h1><h1>Welcome to Our Website</h1></h1>
+    </div>
+    <div class="container">
+        <h1>Earn Rewards for completing task</h1>
+        <div class="buttons">
+            <a href="{% url 'login' %}">
+                <button class="login-button">Login</button>
+            </a>
+            <a href="{% url 'register' %}">
+                <button class="register-button">Register</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+<style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e6f0ff; /* Light blue background */
+        }
+          nav{
+           text-align: left;
+}
+
+        .container {
+            width: 80%;
+            max-width: 1500px;
+            height: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .login-button {
+            background-color: #3b5998; /* Facebook blue */
+            color: white;
+        }
+
+        .register-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+.header {
+            background-color:rgb(72, 144, 150);
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</html>

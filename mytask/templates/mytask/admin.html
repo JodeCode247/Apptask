@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+        .platform-card {
+            background-color: #f0f5ff; /* Light blue background */
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+    
+        .platform-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+    
+        .platform-icon.facebook {
+            background-color: #3b5998; /* Facebook blue */
+            color: white;
+        }
+    
+        .platform-icon.snapchat {
+            background-color: #ffd320; /* Snapchat yellow */
+            color: #fff;
+        }
+    
+        .platform-icon.linkedin {
+            background-color: #0077b5; /* LinkedIn blue */
+            color: white;
+        }
+    
+        .platform-details {
+            flex-grow: 1;
+        }
+    </style>  
+</head>
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <a href='{% url "adminPage" %}'>Home</a>
+            <a href='{% url "app_create" %}'>Add Apps</a> 
+            <a href='{% url "view_all_user" %}'>Users Account</a>
+        </div>
+
+        <div class="content">
+            <h1>Hello {{user}}</h1>
+            {% if task_awaiting_approval %}
+
+            {% for app in task_awaiting_approval %}
+            <div class="platform-card">
+                <div class="platform-icon facebook">
+                    <i class="fab fa-facebook-f"></i> 
+                </div>
+                <div class="platform-details">
+                    <h4>{{app.app.name}}</h4><h5>by: {{app.user}}</h5>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input value="{{app.id}}" type="hidden" name="task_id">
+                        <p><button type="submit" name="action" value="approve">Approve</button></p>
+                        <h6>Category: {{app.app.category}} </h6>
+                    </form>
+                </div>
+                <div class="points">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input value="{{app.id}}" type="hidden" name="task_id">
+                        <p><button type="submit" name="action" value="decline">Decline</button></p>
+                    </form>
+                </div>
+            
+            </div>
+
+            
+            {% endfor %}
+            {% else %}
+            <div class="points">
+                <h4>No pending request</h4>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your_fontawesome_key.js" crossorigin="anonymous"></script>
+
+</body>
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e6f0ff; /* Light blue background */
+    }
+
+    .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+    }
+
+    .sidebar {
+        width: 20%;
+        padding: 20px;
+        background-color: #e6f0ff; /* Lighter blue for sidebar */
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .content {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .app-form {
+        background-color: #f0f5ff; /* Light blue background */
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .app-icon {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+        border: 1px dashed #ccc;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: #ccc;
+    }
+
+    .app-details {
+        width: 100%;
+    }
+
+    .app-details input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+    }
+
+    .points-container {
+        text-align: center;
+    }
+
+    .points {
+        background-color: #cfe2ff; /* Light blue for points */
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .points a {
+        text-decoration: none;
+</style>
+</html>

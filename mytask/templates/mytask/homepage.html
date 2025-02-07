@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Points Page</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+
+        .box img {
+            width: 50%;
+            object-fit: contain;
+          }
+          .myphotodiv {
+            width: 50%;
+          }
+          
+          
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <a href="{% url 'homepage' %}">Home</a>
+            <a href="{% url 'pending_task' %}">Pending: <strong> {{pending_num}}</strong> </a>
+            <a href="">Total Points: <strong>{{user.total_points}}</strong></a>
+            <a href=""><p>Task completed : <strong>{{user.number_of_task_completed}}</strong>   </p> </a>
+            <a href="{% url 'logout' %}">Logout</a> 
+        </div>
+        
+
+        <div class="content">
+            <h1>Hello {{user}} </h1>
+         {% if apps.count > 0 %}
+         <form action="" method="get">
+         <input type="search" placeholder='explore apps' name="query" id="">
+         <button>search</button>
+        </form>
+         <p></p>
+         {% for app in apps %}
+            <div class="platform-card">
+                <div class ='myphotodiv'>
+                
+                    <div class = 'box'> <img src= "{{app.app_icon.url}}" alt="logo"></div>
+                </div>
+                <div class="platform-details">
+                    <h3>{{app}}</h3>
+                    {% if status %}
+                    <p><a href=''><button>PENDING</button></a></p>
+                    {% else %}
+                    <p><a href="{{app.app_store_link}}" target="_blank"><button>Earn reward</button></a></p>
+                    {% endif %}
+                     <h6>Category: {{app.category}} </h6>
+                </div>
+                <div class="points"><a href='{% url "submit_task" app.id %}'>
+                    {{app.points_reward}} POINTS</a>
+                </div>
+            </div>
+
+            {% endfor %}
+           
+        {% else %}
+
+            {% if home == 10 %}
+            <div class="platform-card">
+            <p>NO APPS TASK LEFT😊 SHARE WITH YOUR FRIENDS TO ALSO EARN POINTS🤑 WITH YOU</p>
+            </div>
+             {% else %}
+            
+            <div class="platform-card">
+                <p>No pending task</p>
+            </div>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your_fontawesome_key.js" crossorigin="anonymous"></script>
+
+</body>
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e6f0ff; /* Light blue background */
+    }
+
+    .container {
+        width: 90%;
+        height:1000px;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar {
+        width: 50%;
+        padding: 20px;
+        background-color: #f0f5ff; /* Lighter blue for sidebar */
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .sidebar a:hover {
+        background-color: #e6f0ff;
+    }
+
+    .content {
+        width: 80%;
+        float: right;
+        padding: 20px;
+    }
+
+    .platform-card {
+        background-color: #f0f5ff; /* Light blue background */
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .platform-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+    }
+
+    .platform-icon.facebook {
+        background-color: #3b5998; /* Facebook blue */
+        color: white;
+    }
+
+    .platform-icon.snapchat {
+        background-color: #ffd320; /* Snapchat yellow */
+        color: #fff;
+    }
+
+    .platform-icon.linkedin {
+        background-color: #0077b5; /* LinkedIn blue */
+        color: white;
+    }
+
+    .platform-details {
+        flex-grow: 1;
+    }
+
+    .points  {
+        background-color: #cfe2ff; /* Light blue for points */
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .points a {
+        text-decoration: none;
+</style>
+</html>

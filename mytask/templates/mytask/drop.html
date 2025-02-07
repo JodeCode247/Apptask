@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Page</title>
+    
+</head>
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <a href="{% url 'homepage' %}">Home</a>
+            <a href="#">Profile</a>
+            <a href="">Total Points:{{user.total_points}}</a>
+            <a href="{% url 'view_all_app' %}">Task</a>
+            <a href="{% url 'logout' %}">Logout</a> 
+        </div>
+        <div class="content">
+            <h1>Hello {{user}} </h1>
+
+            <div class="task-card">
+                
+                <div class = 'box'> <img src= "{{app.app_icon.url}}" alt="logo"></div>
+                
+                <div class="task-details">
+                    <h3>{{app}}</h3>
+                    <p>{{app.app_store_link}}</p>
+                </div>
+                <div class="task-points">
+                    {{app.points_reward}} POINTS
+                </div>
+            </div>
+            <form id="upload-form" action="{% url 'submit_task' app.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <input class="dropzone" type="file" name="screenshot">
+                    <div id="file-list"></div>
+
+                </div>
+                <p></p>
+                <input type="submit" value="Upload">
+            </form>
+        
+            
+
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your_fontawesome_key.js" crossorigin="anonymous"></script>
+    
+
+
+
+</body>
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e6f0ff; /* Light blue background */
+    }
+
+
+    .box img {
+        width: 50%;       
+        object-fit: fill;
+      }
+      
+    .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+    }
+
+    .sidebar {
+        width: 20%;
+        padding: 20px;
+        background-color: #e6f0ff; /* Lighter blue for sidebar */
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .content {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .task-card {
+        background-color: #f0f5ff; /* Light blue background */
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .task-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background-color: #0077b5; /* LinkedIn blue */
+        color: white;
+    }
+
+    .task-details {
+        flex-grow: 1;
+    }
+
+    .task-points {
+        background-color: #cfe2ff; /* Light blue for points */
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .dropzone {
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    .dropzone.hover {
+        border-color: #007bff;
+    }
+
+    .files-list {
+        list-style: none;
+        padding: 0;
+    }
+</style>
+</html>

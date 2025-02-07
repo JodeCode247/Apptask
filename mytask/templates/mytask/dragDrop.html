@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop Image Upload</title>
+    <style>
+        #drop_zone {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        #file_list {
+            list-style: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="upload-form" action="{% url 'submit_task' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="drop_zone">
+            Drag and drop images here
+        </div>
+        <ul id="file_list"></ul>
+        <input type="submit" value="Upload">
+    </form>
+
+    <script>
+        const dropZone = document.getElementById('drop_zone');
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.multiple = true;
+        fileInput.style.display = 'none';
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+
+            for (const file of files) {
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name;
+                document.getElementById('file_list').appendChild(listItem);
+
+                const formData = new FormData();
+                formData.append('screenshot', file); // Assuming your field name is 'screenshot'
+
+                // You can use AJAX to submit the form asynchronously here:
+                // ... (AJAX code) ...
+            }
+        });
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            const files = fileInput.files;
+            for (const file of files) {
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name;
+                document.getElementById('file_list').appendChild(listItem);
+
+                // Handle file upload (e.g., using AJAX)
+            }
+        });
+
+        document.body.appendChild(fileInput);
+    </script>
+
+</body>
+</html>
