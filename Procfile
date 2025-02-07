@@ -1,1 +1,1 @@
- web: gunicorn tasks
+ web: gunicorn tasks.wsgi
