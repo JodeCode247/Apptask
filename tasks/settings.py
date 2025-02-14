@@ -13,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wxu+5+i95)4vj*%=r!7lkvq*%qc-*&7x0&o3djog*&xy8qo2ha'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL ="mytask.MyUsers"
 
@@ -125,7 +125,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'static/media'
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # STORAGES = {
 #     # ...
