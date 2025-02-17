@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mytask',
     'rest_framework',
-    'api',
+    
 ]
 
 MIDDLEWARE = [
