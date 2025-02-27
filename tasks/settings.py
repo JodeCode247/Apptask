@@ -76,7 +76,7 @@ if DEBUG:
             }
         }
 
-else:
+if not DEBUG:
    DATABASES = {
 
     'default': {
