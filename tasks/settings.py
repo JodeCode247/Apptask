@@ -1,7 +1,7 @@
 
 from pathlib import Path 
 import os
-#import dj_database_url # type: ignore
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')   # 'django-insecure-#(7z1!^@_!   
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -67,16 +67,35 @@ WSGI_APPLICATION = 'tasks.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-DATABASES = {}
 
-DATABASES = {
+if DEBUG:
+    DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
-# else:
-#     DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+
+else:
+   DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': 'dpg-cv08bgan91rc73flv430-a',
+
+        'USER': 'task_app_db_91h9_user',
+
+        'PASSWORD': 'nnZ1aWus5Ja77ehXtN5Ndkq0EfJUSTyR',
+
+        'HOST': 'dpg-cv08bgan91rc73flv430-a',
+
+        'PORT': '5432',
+
+    }
+
+}
 
 
 # Password validation
