@@ -83,7 +83,7 @@ if not DEBUG:
 
         'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': 'dpg-cv08bgan91rc73flv430-a',
+        'NAME': 'task-app-db',
 
         'USER': 'task_app_db_91h9_user',
 
