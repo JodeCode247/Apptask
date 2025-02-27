@@ -1,6 +1,8 @@
 
 from pathlib import Path 
 import os
+import dj_database_url
+ 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,25 +79,11 @@ if DEBUG:
         }
 
 if not DEBUG:
-   DATABASES = {
-
-    'default': {
-
-        'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'task-app-db',
-
-        'USER': 'task_app_db_91h9_user',
-
-        'PASSWORD': 'nnZ1aWus5Ja77ehXtN5Ndkq0EfJUSTyR',
-
-        'HOST': 'dpg-cv08bgan91rc73flv430-a',
-
-        'PORT': '5432',
-
-    }
-
-}
+    DATABASES = {
+     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'),
+        conn_max_age=600,)
+ }
+    
 
 
 # Password validation
@@ -143,8 +131,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'  
 MEDIA_ROOT = BASE_DIR/'static/media'
 
+STATIC_URL = '/static/'
 
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# This production code might break development mode, so we check whether we're in DEBUG mode
+if not DEBUG:
+    
+    # Add configuration for static files storage using whitenoise
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # STORAGES = {
 #     # ...
