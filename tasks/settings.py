@@ -80,9 +80,29 @@ if DEBUG:
 
 if not DEBUG:
     DATABASES = {
-     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'),
+     'default': dj_database_url.parse('postgresql://postgres:GYHrgGnEPVGFIhGfREsMXHxukAtISxFg@yamanote.proxy.rlwy.net:35852/railway',
         conn_max_age=600,)
  }
+    
+#     DATABASES = {
+
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.postgresql',
+
+#         'NAME': 'railway',
+
+#         'USER': 'postgres',
+
+#         'PASSWORD': 'xejVZqOAOcUQvjjktHFLOdRDDptqSvIE',
+
+#         'HOST': 'postgresql://postgres:xejVZqOAOcUQvjjktHFLOdRDDptqSvIE@turntable.proxy.rlwy.net:25398/railway',
+
+#         'PORT': '5432',
+
+#     }
+
+# }
     
 
 
@@ -130,8 +150,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'  
 MEDIA_ROOT = BASE_DIR/'static/media'
-
-STATIC_URL = '/static/'
 
 # This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
