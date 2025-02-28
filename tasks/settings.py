@@ -80,8 +80,8 @@ if DEBUG:
 
 if not DEBUG:
     if not DEBUG:
-    DATABASES = {
-     'default': dj_database_url.parse('postgresql://postgres:GYHrgGnEPVGFIhGfREsMXHxukAtISxFg@yamanote.proxy.rlwy.net:35852/railway',
+        DATABASES = {
+       'default': dj_database_url.parse('postgresql://postgres:GYHrgGnEPVGFIhGfREsMXHxukAtISxFg@yamanote.proxy.rlwy.net:35852/railway',
         conn_max_age=600,)
  }
     
