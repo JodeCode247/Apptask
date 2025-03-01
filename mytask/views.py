@@ -68,28 +68,35 @@ def adminPage(request):
     task_awaiting_approval = UserAppDownload.objects.filter(task_completed=True,is_approved=False)
     
     if request.method == 'POST':
-        task_id = int(request.POST.get('task_id'))
-        #check to see if the admin declined the task by user
-        action = request.POST.get('action')
-        if action == 'approve':
-            task = task_awaiting_approval.get(id=task_id)
-            print(task.app,'yeah')
-            task.pending=False
-            task.is_approved=True
-            task.save()
-            print('task approved')
+        try:
+            task_id = int(request.POST.get('task_id'))
+            #check to see if the admin declined the task by user
+            action = request.POST.get('action')
+            if action == 'approve':
+                task = task_awaiting_approval.get(id=task_id)
+                task.pending = False
+                task.is_approved=True
+                task.save()
+                
+                if task.is_approved==True:
+                    print('task approved')
+                    person = UserProfile.objects.get(user=task.user)
+                    app_reward = int(task.app.points_reward)
+                    total_points=person.total_points+app_reward
+                    print(total_points)
+                    person.total_points=total_points
+                    person.number_of_task_completed +=1
+                    person.save()
+            
 
-        if action == 'decline':
-            task = task_awaiting_approval.get(id=task_id)
-            task.delete()
-            return redirect('adminPage')
-        person = UserProfile.objects.get(user=task.user)
-        app_reward = int(task.app.points_reward)
-        total_points=person.total_points+app_reward
-        print(total_points)
-        person.total_points=total_points
-        person.number_of_task_completed +=1
-        person.save()
+            elif action == 'decline':
+                task = task_awaiting_approval.get(id=task_id)
+                task.delete()
+                return redirect('adminPage')
+        except UserAppDownload.DoesNotExist:
+            return HttpResponse('Invalid task ID', status=400)
+        
+        
             
     
     context = {'user':user,'task_awaiting_approval':task_awaiting_approval}

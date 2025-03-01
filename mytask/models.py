@@ -70,9 +70,9 @@ class UserAppDownload(models.Model):
     download_date = models.DateTimeField(auto_now_add=True) 
     pending = models.BooleanField(default=False)
     
-    def save(self, *args, **kwargs):
-        if self.screenshot:
-            img = Image.open(self.screenshot)
-            img.thumbnail((500, 500))
-            img.save(self.screenshot.path)
-        super(UserAppDownload, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.screenshot:
+    #         img = Image.open(self.screenshot)
+    #         img.thumbnail((500, 500))
+    #         img.save(self.screenshot.path)
+    #     super(UserAppDownload, self).save(*args, **kwargs)
