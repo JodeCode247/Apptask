@@ -1,14 +1,27 @@
+from urllib import request
 from django.shortcuts import render,redirect
 from .models import MyUsers,AdminApps,UserProfile,UserAppDownload
 from django.contrib.auth import login,logout
 from django.http import HttpResponse,JsonResponse
+from functools import wraps
 
+
+
+def check_if_user_is_admin(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user == "ADMIN":
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponse('INVALID URL')
+    return _wrapped_view
 
 
 
 def indexpage(request):
     
     return render(request,'mytask/index.html')
+
 
 def homepage(request):
     status=''
@@ -47,7 +60,7 @@ def pendingTask(request):
     return render(request,'mytask/homepage.html',context)
 
 
-
+@check_if_user_is_admin
 def adminPage(request):
     user = request.user
     #gets the pending tasks , to be displays on the admin dashboard
@@ -80,7 +93,7 @@ def adminPage(request):
     context = {'user':user,'task_awaiting_approval':task_awaiting_approval}
     return render(request,'mytask/admin.html',context)
 
-
+@check_if_user_is_admin
 def app_create(request):
     if request.method=='POST':
         name = request.POST.get('app_name').upper()
@@ -105,6 +118,7 @@ def app_create(request):
     context = {'categories':categories}
     return render(request,'mytask/app-create.html',context)
 
+@check_if_user_is_admin
 def submit_task(request,app_id):
     app=AdminApps.objects.get(id=app_id)
     user = UserProfile.objects.get(user=request.user)
@@ -170,7 +184,7 @@ def register_user(request):
 
     return render(request,'mytask/registration.html')
 
-
+@check_if_user_is_admin
 def delete_user(request,id):
     if request.method=='POST':
         user=MyUsers.objects.get(id=id)
