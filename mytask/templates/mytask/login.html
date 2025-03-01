@@ -4,10 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login Page</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(function(message) {
+                alert(message.textContent);
+            });
+        });
+    </script>
    
 </head>
 <body>
-
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="message" style="display: none;">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+<!-- Your registration form here -->
     <div class="login-container">
         <h2>Login</h2>
         <form action='' method="post">

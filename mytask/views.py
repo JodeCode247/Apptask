@@ -4,6 +4,7 @@ from .models import MyUsers,AdminApps,UserProfile,UserAppDownload
 from django.contrib.auth import login,logout
 from django.http import HttpResponse,JsonResponse
 from functools import wraps
+from django.contrib import messages
 
 
 
@@ -179,6 +180,8 @@ def register_user(request):
                 UserProfile.objects.create(user=user)
 
         if user:
+            messages.success(request, 'User registered successfully!')
+
             return redirect('login')
         
 
@@ -189,8 +192,9 @@ def delete_user(request,id):
     if request.method=='POST':
         user=MyUsers.objects.get(id=id)
         user.delete()
-        return redirect('view_all_user')
+        messages.success(request, 'User deleted successfully!')
 
+        return redirect('view_all_user')
     return render(request,'mytask/delete.html')
 
 
@@ -203,30 +207,31 @@ def login_user(request):
         password = request.POST.get('password')
         if email and password:
             try:
-                user = MyUsers.objects.get(email = email)
-                if user.check_password(password):
-
-                    if user is not None:
-                        print(user.email, 'password test passed')
-                        login(request,user)
-                        if user.user_type == "USER":
-                            print('yes normal user')
-                            return redirect('homepage')
-
-                        elif user.user_type == "ADMIN":
-                            print('yes ADMIN')
-                            #return redirect('home')
-                            return redirect('adminPage')
-                        
-                        else:
-                            return HttpResponse('user not logged in , due to authentication failure')
-                else:
-                    return HttpResponse('email or password incorrect')
-            except:
-                return HttpResponse('user does not exist')
-              
-    return render(request,'mytask/login.html')
-
+                user = MyUsers.objects.get(email=email)
+            except MyUsers.DoesNotExist:
+                messages.error(request, 'User does not exist.')
+                return render(request, 'mytask/login.html')
+            
+            if user.check_password(password):
+                if user is not None:
+                    print(user.email, 'password test passed')
+                    login(request, user)
+                    if user.user_type == "USER":
+                        print('yes normal user')
+                        return redirect('homepage')
+                    elif user.user_type == "ADMIN":
+                        print('yes ADMIN')
+                        return redirect('adminPage')
+                    else:
+                        messages.error(request, 'Invalid user type.')
+                        return render(request, 'mytask/login.html')
+            else:
+                messages.error(request, 'Incorrect password.')
+                return render(request, 'mytask/login.html')
+        else:
+            messages.error(request, 'Missing email or password.')
+            return render(request, 'mytask/login.html')
+    return render(request, 'mytask/login.html')
 
 def logout_user(request):
     logout(request)

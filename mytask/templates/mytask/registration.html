@@ -48,9 +48,30 @@
             margin-bottom: 10px;
         }
     </style>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(function(message) {
+                alert(message.textContent);
+            });
+        });
+    </script>
+</head>
+
+    
+
 </head>
 <body>
-
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="message" style="display: none;">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+<!-- Your registration form here -->
     <div class="container">
         <h2>Registration</h2>
         <form method="post"> 
