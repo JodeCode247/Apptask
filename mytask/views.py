@@ -11,7 +11,7 @@ from django.contrib import messages
 def check_if_user_is_admin(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        if request.user == "ADMIN":
+        if request.user.user_type == "ADMIN":
             return view_func(request, *args, **kwargs)
         else:
             return HttpResponse('INVALID URL')
@@ -77,6 +77,7 @@ def adminPage(request):
             task.pending=False
             task.is_approved=True
             task.save()
+            print('task approved')
 
         if action == 'decline':
             task = task_awaiting_approval.get(id=task_id)
@@ -119,7 +120,7 @@ def app_create(request):
     context = {'categories':categories}
     return render(request,'mytask/app-create.html',context)
 
-@check_if_user_is_admin
+
 def submit_task(request,app_id):
     app=AdminApps.objects.get(id=app_id)
     user = UserProfile.objects.get(user=request.user)
