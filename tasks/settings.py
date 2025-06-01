@@ -81,7 +81,7 @@ if DEBUG:
 if not DEBUG:
     if not DEBUG:
         DATABASES = {
-       'default': dj_database_url.parse("postgres://tsdbadmin:fg8lywg6oc1hn0fr@rcprqydxnc.hdsclb2lhw.tsdb.cloud.timescale.com:34216/tsdb?sslmode=require",
+       'default': dj_database_url.parse("postgres://tsdbadmin@rcprqydxnc.hdsclb2lhw.tsdb.cloud.timescale.com:34216/tsdb?sslmode=require",
         conn_max_age=600,)
  }
     
